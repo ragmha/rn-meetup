@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { StyleSheet, Text, View, ActivityIndicator } from 'react-native';
 import { fetchMeetups } from './constants/api';
 
-class App extends React.Component {
+export default class App extends Component {
   static defaultProps = {
     fetchMeetups,
   };
@@ -15,8 +15,11 @@ class App extends React.Component {
   async componentDidMount() {
     this.setState({ loading: true });
     const data = await this.props.fetchMeetups();
-    console.log('Loading Data', data);
-    this.setState({ loading: false, meetups: data.meetups });
+    console.log('Meetups', data);
+    setTimeout(
+      () => this.setState({ loading: false, meetups: data.meetups }),
+      2000
+    );
   }
 
   render() {
@@ -27,24 +30,13 @@ class App extends React.Component {
         </View>
       );
     }
-
-    if (!this.state.meetups) {
-      return (
-        <View style={styles.container}>
-          <Text>No meetups yo!</Text>
-        </View>
-      );
-    } else {
-      return (
-        <View style={styles.container}>
-          <Text>There is some meetup</Text>
-        </View>
-      );
-    }
-
     return (
       <View style={styles.container}>
-        <Text>Meetup</Text>
+        <Text>MeetUp</Text>
+
+        {this.state.meetups.map((meetup, i) => (
+          <Text key={i}>{meetup.title}</Text>
+        ))}
       </View>
     );
   }
@@ -58,5 +50,3 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
-
-export default App;
