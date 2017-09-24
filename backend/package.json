@@ -18,5 +18,7 @@
     "mongoose": "^4.11.6",
     "morgan": "^1.8.2"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "eslint-config-equimper": "^2.2.1"
+  }
 }
